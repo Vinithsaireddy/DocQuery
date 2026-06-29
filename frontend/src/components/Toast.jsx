@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { CheckCircle, XCircle, Info, AlertTriangle, X } from 'lucide-react';
+import { setGlobalDispatch } from '../services/toast';
 
 const ICONS = {
   success: { Icon: CheckCircle, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/25', glow: 'shadow-emerald-500/20' },
@@ -9,15 +10,6 @@ const ICONS = {
 };
 
 let toastId = 0;
-let globalDispatch = null;
-
-// External API — call these from anywhere
-export const toast = {
-  success: (msg, opts) => globalDispatch?.({ type: 'ADD', payload: { type: 'success', message: msg, ...opts } }),
-  error:   (msg, opts) => globalDispatch?.({ type: 'ADD', payload: { type: 'error',   message: msg, ...opts } }),
-  info:    (msg, opts) => globalDispatch?.({ type: 'ADD', payload: { type: 'info',    message: msg, ...opts } }),
-  warning: (msg, opts) => globalDispatch?.({ type: 'ADD', payload: { type: 'warning', message: msg, ...opts } }),
-};
 
 function ToastItem({ id, type, message, onRemove }) {
   const [leaving, setLeaving] = useState(false);
@@ -68,8 +60,8 @@ export function ToastProvider() {
   };
 
   useEffect(() => {
-    globalDispatch = (action) => dispatchRef.current?.(action);
-    return () => { globalDispatch = null; };
+    setGlobalDispatch((action) => dispatchRef.current?.(action));
+    return () => { setGlobalDispatch(null); };
   }, []);
 
   const remove = useCallback((id) => {

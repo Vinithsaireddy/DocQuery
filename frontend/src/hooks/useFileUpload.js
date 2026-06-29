@@ -45,7 +45,7 @@ export function useFileUpload({ onUpload, accept = 'application/pdf' }) {
       dragCounter.current = 0;
       setIsDragging(false);
       const file = e.dataTransfer.files?.[0];
-      if (file?.type === 'application/pdf') {
+      if (file?.type === accept) {
         onUpload(file);
       }
     },

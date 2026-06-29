@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { FileText, Sparkles, Zap, BookOpen, Upload } from 'lucide-react';
 
 const FEATURES = [
@@ -37,12 +36,7 @@ export default function EmptyState({ onUpload }) {
     <div className="flex flex-col items-center justify-center min-h-full text-center px-6 py-12 select-none">
 
       {/* Animated hero icon */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.7, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mb-8"
-      >
+      <div className="relative mb-8 animate-scale-in">
         {/* Outer glow ring */}
         <div
           className="absolute inset-0 rounded-3xl blur-2xl"
@@ -70,29 +64,20 @@ export default function EmptyState({ onUpload }) {
           />
           <FileText size={48} className="relative z-10" style={{ color: '#818cf8' }} />
         </div>
-      </motion.div>
+      </div>
 
       {/* Headline */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.15, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      >
+      <div className="animate-slide-up" style={{ animationDelay: '150ms' }}>
         <h2 className="text-4xl font-bold mb-3 tracking-tight">
           <span className="gradient-text">Chat with any PDF</span>
         </h2>
         <p className="text-slate-400 max-w-md mx-auto leading-relaxed text-sm">
           Upload your document and start asking questions. DocQuery AI reads, understands, and answers — instantly.
         </p>
-      </motion.div>
+      </div>
 
       {/* Upload CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.25, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="mt-8 mb-10"
-      >
+      <div className="mt-8 mb-10 animate-slide-up" style={{ animationDelay: '250ms' }}>
         <button
           id="empty-state-upload-btn"
           onClick={onUpload}
@@ -110,49 +95,40 @@ export default function EmptyState({ onUpload }) {
         <p className="text-slate-600 text-xs mt-3">
           or drag & drop onto the sidebar · Max 50 MB
         </p>
-      </motion.div>
+      </div>
 
       {/* Feature cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.35, duration: 0.5 }}
-        className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mb-10"
-      >
-        {FEATURES.map(({ icon: Icon, color, glow, title, desc }, i) => (
-          <motion.div
-            key={title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 + i * 0.1, duration: 0.4 }}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mb-10 animate-slide-up" style={{ animationDelay: '350ms' }}>
+        {FEATURES.map((feature, i) => (
+          <div
+            key={feature.title}
             className="flex flex-col items-start gap-3 p-4 rounded-2xl text-left transition-all duration-300 hover:scale-[1.02]"
             style={{
               background: 'rgba(19,25,41,0.7)',
               border: '1px solid rgba(255,255,255,0.06)',
               boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+              animationDelay: `${400 + i * 100}ms`,
             }}
           >
             <div
               className="w-9 h-9 rounded-xl flex items-center justify-center"
-              style={{ background: `rgba(${hexToRgb(color)},0.15)`, boxShadow: `0 0 12px ${glow}` }}
+              style={{
+                background: `rgba(${hexToRgb(feature.color)},0.15)`,
+                boxShadow: `0 0 12px ${feature.glow}`,
+              }}
             >
-              <Icon size={18} style={{ color }} />
+              <feature.icon size={18} style={{ color: feature.color }} />
             </div>
             <div>
-              <p className="text-slate-200 font-semibold text-sm mb-1">{title}</p>
-              <p className="text-slate-500 text-xs leading-relaxed">{desc}</p>
+              <p className="text-slate-200 font-semibold text-sm mb-1">{feature.title}</p>
+              <p className="text-slate-500 text-xs leading-relaxed">{feature.desc}</p>
             </div>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
       {/* Suggested questions */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.7 }}
-        className="flex flex-wrap justify-center gap-2 max-w-lg"
-      >
+      <div className="flex flex-wrap justify-center gap-2 max-w-lg animate-fade-in" style={{ animationDelay: '700ms' }}>
         <p className="w-full text-xs text-slate-600 mb-1">Try asking:</p>
         {SUGGESTIONS.map((s) => (
           <span
@@ -166,7 +142,7 @@ export default function EmptyState({ onUpload }) {
             {s}
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }

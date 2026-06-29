@@ -9,7 +9,8 @@ import Message from './components/Message';
 import ChatInput from './components/ChatInput';
 import TypingIndicator from './components/TypingIndicator';
 import ScrollToBottom from './components/ScrollToBottom';
-import { ToastProvider, toast } from './components/Toast';
+import { ToastProvider } from './components/Toast';
+import { toast } from './services/toast';
 
 export default function App() {
   const [messages, setMessages] = useState([]);

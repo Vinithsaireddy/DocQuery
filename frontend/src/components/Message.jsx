@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { User, Copy, Check } from 'lucide-react';
@@ -20,11 +19,8 @@ export default function Message({ role, text, timestamp }) {
   }, [text]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14, scale: 0.97 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className={`group flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`}
+    <div
+      className={`animate-slide-up group flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`}
     >
       {/* Avatar */}
       <div
@@ -103,6 +99,6 @@ export default function Message({ role, text, timestamp }) {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
